@@ -1,3 +1,6 @@
 {
- "serveo-domain": "kpgefrudw3od4o4s6tmkazqvdf39a7tl"
+ "serveo-domain" : "https://kpgefrudw3od4o4s6tmkazqvdf39a7tl.serveo.net",
+ "production-api" : "https://psd2.redsys.es/api-entrada-xs2a/services/BancSabadell/v1.1",
+ "production-auth" : "https://hubpsd2.redsys.es/api-oauth-xs2a/services/rest/BancSabadell",
+ "production-token" : "https://hubpsd2.redsys.es/api-oauth-xs2a/services/rest/BancSabadell"
 }
