@@ -1,4 +1,5 @@
 import json
+import os
 
 class Constants:
     _data = None
@@ -7,10 +8,10 @@ class Constants:
     def load(cls):
 
         if cls._data is None:
-            with open('../public-config.json', 'r') as file:
+            with open('public-config.json', 'r') as file:
                 cls._data = json.load(file)
 
-            with open('../secrets.json', 'r') as file:
+            with open('secrets.json', 'r') as file:
                 cls._data.update(json.load(file))
 
         return cls._data
