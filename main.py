@@ -2,7 +2,6 @@ import threading
 from flask import Flask
 from appcode.credentials import credentials_bp
 import appcode.startup as startup
-import appcode.credentials
 
 # Sets the app and Blueprints
 app = Flask(__name__)
@@ -12,8 +11,6 @@ if __name__ == '__main__':
 
     # Sets the config files
     startup.checkConfig()
-
-    appcode.credentials.decryptCredentials("Sabadell")
 
     # Starts the server and the app
     ssh_thread = threading.Thread(target=startup.startServer())

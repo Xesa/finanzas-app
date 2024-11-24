@@ -12,14 +12,14 @@ class Constants:
             cls._data = {}
 
             # Opens the config file and reads the info
-            with open('public-config.json', 'r') as file:
+            with open('config-public.json', 'r') as file:
                 try:
                     cls._data['public'] = json.load(file)
                 except json.decoder.JSONDecodeError:
                     cls._data['public'] = {}
 
             # Opens the secrets file and reads the info
-            with open('secrets.json', 'r') as file:
+            with open('config-secrets.json', 'r') as file:
                 try:
                     cls._data['secrets'] = (json.load(file))
                 except json.decoder.JSONDecodeError:
@@ -51,10 +51,10 @@ class Constants:
 
         # Checks which mode is selected and returns None if no mode is selected
         if (mode == "p"):
-            fileName = "public-config.json"
+            fileName = "config-public.json"
             dict = "public"
         elif (mode == "s"):
-            fileName = "secrets.json"
+            fileName = "config-secrets.json"
             dict = "secrets"
         else:
             return None

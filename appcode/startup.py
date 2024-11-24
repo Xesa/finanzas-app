@@ -27,12 +27,12 @@ def startServer():
 def checkConfig():
 
     # Checks if the config file exists and creates it if not
-    if (not pathlib.Path('public-config.json').is_file()):
-        open("public-config.json", "w").close()
+    if (not pathlib.Path('config-public.json').is_file()):
+        open("config-public.json", "w").close()
 
     # Checks if the secrets file exists and creates it if not
-    if (not pathlib.Path('secrets.json').is_file()):
-        open("secrets.json", "w").close()
+    if (not pathlib.Path('config-secrets.json').is_file()):
+        open("config-secrets.json", "w").close()
 
     # Checks if the basic config exists and creates it if not
     setFilePath()
@@ -41,15 +41,14 @@ def checkConfig():
         setServeoDomain()
 
     if (Constants.get('VALIDATION_TOKEN', "s") is None):
-        print("yes")
         setValidationToken()
 
     if (Constants.get('SECRET_TOKEN', "s") is None):
         crypto.setSecretToken()
 
 def setFilePath():
-    filePath = pathlib.Path().resolve().as_uri()
-    Constants.write("file-path", filePath, "p")
+    filePath = pathlib.Path().resolve()
+    Constants.write("file-path", str(filePath), "p")
 
 def setValidationToken():
     validationToken = secrets.token_urlsafe(32)[:32]

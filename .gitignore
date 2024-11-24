@@ -1,4 +1,5 @@
-secrets.json
-public-config.json
+config-secrets.json
+config-public.json
 serveo-key
 serveo-key.pub
+downloads/
