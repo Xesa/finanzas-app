@@ -40,7 +40,7 @@ def checkConfig():
     if (Constants.get('serveo-domain', "p") is None):
         setServeoDomain()
 
-    if (Constants.get('VALIDATION_TOKEN', "s") is None):
+    if (Constants.get('API_TOKEN', "s") is None):
         setValidationToken()
 
     if (Constants.get('SECRET_TOKEN', "s") is None):
@@ -52,7 +52,7 @@ def setFilePath():
 
 def setValidationToken():
     validationToken = secrets.token_urlsafe(32)[:32]
-    Constants.write("VALIDATION_TOKEN", validationToken, "s")
+    Constants.write("API_TOKEN", validationToken, "s")
 
 def setServeoDomain():
     serveoDomain = secrets.token_urlsafe(32)[:32]

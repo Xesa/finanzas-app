@@ -20,7 +20,7 @@ import config
 # may change overtime. Just change the identification strategy for the Shadow Hosts
 # to find the elements that contain the Shadow Roots.
 
-def rejectCookies(driver):
+def _rejectCookies(driver):
 
     # Rejects cookies if prompted
     try:
@@ -29,7 +29,7 @@ def rejectCookies(driver):
     except NoSuchElementException:
         pass
 
-def enterLoginPage(driver):
+def _enterLoginPage(driver):
 
     # Gets the Shadow Root from the header element
     header = getElementBySelector(driver, driver, By.ID, 'no_customer')
@@ -44,7 +44,7 @@ def enterLoginPage(driver):
 
     login_button.click()
 
-def makeLogin(driver, credentials):
+def _makeLogin(driver, credentials):
 
     # Gets the first Shadow Host, found by the ID 'login'
     bs_login = getElementBySelector(driver, driver, By.ID, 'login')
@@ -64,7 +64,7 @@ def makeLogin(driver, credentials):
     sendKeys(bs_password, credentials.get('pass'), Keys.ENTER)
     bs_button.click()
 
-def downloadMovements(driver, credentials):
+def _downloadMovements(driver, credentials):
 
     # Enters the Account page
     account = getElementBySelector(driver, driver, By.XPATH, "//li//a[div//p[contains(text(), '5640')]]")
@@ -97,34 +97,36 @@ def downloadMovements(driver, credentials):
     button_download.click()
     time.sleep(3)
 
-def scanMovements():
+def _scanMovements():
 
     # Sets the headers and delimiter
     headers = ['fecha', 'concepto', 'fecha-efectiva', 'importe', 'saldo', 'algo', 'cuenta']
     delimiter = '|'
 
-    return fileScanner.retrieveFileMovements(headers, delimiter)
+    movements = fileScanner.retrieveFileMovements(headers, delimiter)
+    headersToFilter = ['fecha','concepto','importe']
+    return fileScanner.filterFileMovements(movements, headersToFilter)
 
-def getTransactions():
+def getTransactions(args):
 
     # Instantiates the webdriver
-    driver = webdriver.getDriver("https://www.bancsabadell.com/bsnacional/es/particulares/")
+    driver = webdriver.getChromeWithPrefs("https://www.bancsabadell.com/bsnacional/es/particulares/")
 
     # Rejects the cookies
-    rejectCookies(driver)
+    _rejectCookies(driver)
     waitInterval(0.1,0.3)
 
     # Enters the login page
-    enterLoginPage(driver)
+    _enterLoginPage(driver)
     waitInterval(0.1, 0.3)
 
     # Retrieves the credentials from the secrets file and sends them to the login page
     credentials = appcode.credentials.decryptCredentials('Sabadell')
-    makeLogin(driver, credentials)
+    _makeLogin(driver, credentials)
 
     # Downloads the movements and quits the driver
-    downloadMovements(driver, credentials)
+    _downloadMovements(driver, credentials)
     driver.quit()
 
     # Scans the file and returns the movements
-    return scanMovements()
+    return _scanMovements()

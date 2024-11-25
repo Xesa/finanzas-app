@@ -1,11 +1,11 @@
 import threading
 from flask import Flask
-from appcode.credentials import credentials_bp
+import appcode.api_requests as api_requests
 import appcode.startup as startup
 
 # Sets the app and Blueprints
 app = Flask(__name__)
-app.register_blueprint(credentials_bp)
+app.register_blueprint(api_requests.api_bp)
 
 if __name__ == '__main__':
 

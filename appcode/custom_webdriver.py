@@ -56,7 +56,7 @@ class ChromeWithPrefs(uc.Chrome):
             # remove the experimental_options to avoid an error
             del options._experimental_options["prefs"]
 
-def getDriver(url):
+def getChromeWithPrefs(url):
 
     # Creates the options for the Web Driver
     driverOptions = uc.ChromeOptions()
@@ -111,18 +111,3 @@ def printElement(driver, element):
 def printElements(driver, container):
     for element in container:
         printElement(driver, element)
-
-def helperFinder(driver):
-    # In case anything fails, here are some extra methods to get the Shadow DOM elements
-
-    # How to get any kind of element: shadow hosts, shadow roots, slots and nodes
-    bs_layout = driver.find_element(By.XPATH, '/html/body/section[1]/bs-layout')
-    bs_layout_root = driver.execute_script("return arguments[0].shadowRoot", bs_layout)
-    bs_layout_slots = driver.execute_script("return arguments[0].shadowRoot.querySelectorAll('slot')", bs_layout)
-    bs_layout_nodes = driver.execute_script("return arguments[0].assignedNodes()", bs_layout_slots)
-
-    # Then you can print the element
-    printElement(driver, bs_layout)
-
-    # Or print all elements inside a container
-    printElements(driver, bs_layout_slots)

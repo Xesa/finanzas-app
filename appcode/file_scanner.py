@@ -26,7 +26,13 @@ def retrieveFileMovements(headers, delimiter):
         for row in reader:
             data.append(dict(zip(headers, row)))
 
+    # Deletes the file and returns the json dict
     os.remove(txt_file)
-
     return data
 
+def filterFileMovements(movements, headersToFilter):
+    data = []
+    for movement in movements:
+        data.append({key: movement[key] for key in headersToFilter})
+
+    return data

@@ -4,7 +4,7 @@ class Constants:
     _data = None
 
     @classmethod
-    def load(cls):
+    def _load(cls):
 
         # If there is no data stored in the class, opens the config and secret files and reads them
         if cls._data is None:
@@ -36,9 +36,9 @@ class Constants:
 
         # Loads the data and returns it
         if (mode == "p"):
-            return cls.load().get("public").get(key)
+            return cls._load().get("public").get(key)
         elif (mode == "s"):
-            return cls.load().get("secrets").get(key)
+            return cls._load().get("secrets").get(key)
         else:
             return None
 
@@ -61,7 +61,7 @@ class Constants:
 
         # Opens the file and adds the updated key
         with open(fileName, "r+") as file:
-            dictData = cls.load().get(dict)
+            dictData = cls._load().get(dict)
             dictData[key] = value
             cls._data[dict] = dictData
             json.dump(dictData, file, indent=3)
